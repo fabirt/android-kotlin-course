@@ -1,2 +1,2 @@
-# android-kotlin-course
-Developing Android Apps with Kotlin
+# Android Kotlin Course
+Developing native Android Apps with Kotlin
