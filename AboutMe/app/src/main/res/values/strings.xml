@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="name">Fabi Diartt</string>
+    <string name="yellow_star">Yellow star</string>
+    <string name="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris in aliquam sem fringilla ut morbi tincidunt. Leo in vitae turpis massa sed elementum tempus egestas sed. Sagittis orci a scelerisque purus. Cursus eget nunc scelerisque viverra mauris in aliquam sem. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna. Cras fermentum odio eu feugiat pretium. Ultrices sagittis orci a scelerisque purus semper. Libero justo laoreet sit amet cursus sit. Sit amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Consectetur adipiscing elit ut aliquam purus sit. Tellus elementum sagittis vitae et leo duis. Sodales neque sodales ut etiam sit amet nisl. Diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Vel facilisis volutpat est velit egestas dui. Tincidunt nunc pulvinar sapien et ligula. Enim lobortis scelerisque fermentum dui faucibus in. Sed turpis tincidunt id aliquet. Adipiscing elit duis tristique sollicitudin nibh. Elit ullamcorper dignissim cras tincidunt lobortis feugiat.</string>
+    <string name="nick_name_hint">Nickname</string>
+    <string name="done">Done</string>
+</resources>
