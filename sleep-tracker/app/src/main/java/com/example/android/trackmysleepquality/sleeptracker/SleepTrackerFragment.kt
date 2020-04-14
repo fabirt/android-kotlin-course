@@ -1,6 +1,7 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
@@ -41,9 +43,30 @@ class SleepTrackerFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
+        val adapter = SleepNightAdapter(SleepNightListener { nightId ->
+            viewModel.onSleepNightClicked(nightId)
+        })
+
+        val manager = GridLayoutManager(activity, 3)
+
         binding.lifecycleOwner = this
 
+        binding.sleepList.adapter = adapter
+
         binding.sleepTrackerViewModel = viewModel
+
+        binding.sleepList.layoutManager = manager
+
+        viewModel.nights.observe(viewLifecycleOwner, Observer { nights ->
+            adapter.submitList(nights)
+        })
+
+        viewModel.navigateToSleepDataQuality.observe(viewLifecycleOwner, Observer { nightId ->
+            nightId?.let {
+                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepDetailFragment(it))
+                viewModel.onSleepDataQualityNavigated()
+            }
+        })
 
         viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
             night?.let {
@@ -55,7 +78,7 @@ class SleepTrackerFragment : Fragment() {
         })
 
         viewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
-            if(it){
+            if (it) {
                 Snackbar.make(
                         activity!!.findViewById(android.R.id.content),
                         getString(R.string.cleared_message),

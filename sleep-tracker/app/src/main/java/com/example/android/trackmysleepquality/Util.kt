@@ -18,11 +18,17 @@ package com.example.android.trackmysleepquality
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * These functions create a formatted string that can be set in a TextView.
  */
+
+private val ONE_MINUTE_MILLIS = java.util.concurrent.TimeUnit.MILLISECONDS.convert(1, java.util.concurrent.TimeUnit.MINUTES)
+private val ONE_HOUR_MILLIS = java.util.concurrent.TimeUnit.MILLISECONDS.convert(1, java.util.concurrent.TimeUnit.HOURS)
 
 /**
  * Returns a string representing the numeric quality rating.
@@ -38,6 +44,38 @@ fun convertNumericQualityToString(quality: Int, resources: Resources): String {
         5 -> qualityString = resources.getString(R.string.five_excellent)
     }
     return qualityString
+}
+
+/**
+ * Convert a duration to a formatted string for display.
+ *
+ * Examples:
+ *
+ * 6 seconds on Wednesday
+ * 2 minutes on Monday
+ * 40 hours on Thursday
+ *
+ * @param startTimeMilli the start of the interval
+ * @param endTimeMilli the end of the interval
+ * @param res resources used to load formatted strings
+ */
+fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
+    val durationMilli = endTimeMilli - startTimeMilli
+    val weekdayString = SimpleDateFormat("EEEE", Locale.getDefault()).format(startTimeMilli)
+    return when {
+        durationMilli < ONE_MINUTE_MILLIS -> {
+            val seconds = java.util.concurrent.TimeUnit.SECONDS.convert(durationMilli, java.util.concurrent.TimeUnit.MILLISECONDS)
+            res.getString(R.string.seconds_length, seconds, weekdayString)
+        }
+        durationMilli < ONE_HOUR_MILLIS -> {
+            val minutes = java.util.concurrent.TimeUnit.MINUTES.convert(durationMilli, java.util.concurrent.TimeUnit.MILLISECONDS)
+            res.getString(R.string.minutes_length, minutes, weekdayString)
+        }
+        else -> {
+            val hours = java.util.concurrent.TimeUnit.HOURS.convert(durationMilli, java.util.concurrent.TimeUnit.MILLISECONDS)
+            res.getString(R.string.hours_length, hours, weekdayString)
+        }
+    }
 }
 
 
@@ -98,3 +136,5 @@ fun convertLongToDateString(systemTime: Long): String {
 //        return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
 //    }
 //}
+class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
+
